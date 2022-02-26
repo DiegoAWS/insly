@@ -1,13 +1,14 @@
+import { GlobalContextProvider } from "contexts/useGlobalContext";
 import MainPage from "pages/MainPage";
 import "./App.scss";
 
 function App() {
-
-
   return (
-    <div className="App">
-     <MainPage />
-    </div>
+    <GlobalContextProvider>
+      <div className="App">
+        <MainPage />
+      </div>
+    </GlobalContextProvider>
   );
 }
 

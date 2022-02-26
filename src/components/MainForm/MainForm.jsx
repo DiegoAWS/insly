@@ -11,8 +11,8 @@ import NumberInput from "components/NumberInput/NumberInput";
 import InsuranceImage from "assets/insurance.jpeg";
 import './MainForm.scss';
 import LocalTimer from "components/LocalTimer/LocalTimer";
-import { sendInsuranceData } from "services/insuranceService";
-import Loading from "components/Loading/Loading";
+
+import { useGlobalContext } from "contexts/useGlobalContext";
 
 function MainForm() {
     const [carValue, setCarValue] = useState("");
@@ -20,13 +20,8 @@ function MainForm() {
     const [numberOfPolicies, setNumberOfPolicies] = useState("");
     const [checkingForErrors, setCheckingForErrors] = useState(false);
 
-    const initialData = {
-        loading: false,
-        error: false,
-        errorMessage: "",
-        data: []
-    }
-    const [data, setData] = useState(initialData);
+    const {  sendDataToServer } = useGlobalContext()
+
 
     const checkErrorCarPrize = useMemo(() => isNumberNotBetweenCurated(100, 100000), [])
     const checkErrorTaxPercentage = useMemo(() => isNumberNotBetweenCurated(0, 100), [])
@@ -41,8 +36,6 @@ function MainForm() {
             return;
         }
 
-        setData(oldData => ({ ...oldData, loading: true }));
-
         const today = new Date();
 
         const isoDate = today.toISOString();
@@ -56,15 +49,7 @@ function MainForm() {
             local_time: isoDate
         }
 
-        try {
-            const response = await sendInsuranceData(formData);
-            const data = response.data;
-            console.log(data)
-        } catch (e) {
-            console.log(e.message)
-        }
-
-        setData(oldData => ({ ...oldData, loading: false }));
+        sendDataToServer(formData)
     }
 
     return (
@@ -80,7 +65,7 @@ function MainForm() {
                 <CardContent>
                     <div className="cardContentGrid">
                         <NumberInput
-                            initialValue="1000"
+                            initialValue="10000"
                             value={carValue}
                             setValue={setCarValue}
                             checkingForErrors={checkingForErrors}
@@ -93,7 +78,7 @@ function MainForm() {
                         />
 
                         <NumberInput
-                            initialValue="0"
+                            initialValue="10"
                             value={taxPercentage}
                             setValue={setTaxPercentage}
                             checkingForErrors={checkingForErrors}
@@ -105,7 +90,7 @@ function MainForm() {
                         />
 
                         <NumberInput
-                            initialValue="1"
+                            initialValue="2"
                             value={numberOfPolicies}
                             setValue={setNumberOfPolicies}
                             checkingForErrors={checkingForErrors}
@@ -129,7 +114,7 @@ function MainForm() {
                 </div>
 
             </Card>
-            {data.loading && <Loading />}
+          
         </div>
     )
 }
