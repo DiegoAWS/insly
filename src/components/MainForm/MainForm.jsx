@@ -20,17 +20,17 @@ function MainForm() {
     const [numberOfPolicies, setNumberOfPolicies] = useState("");
     const [checkingForErrors, setCheckingForErrors] = useState(false);
 
-    const initialData={
+    const initialData = {
         loading: false,
         error: false,
         errorMessage: "",
-        data:[]
+        data: []
     }
     const [data, setData] = useState(initialData);
 
     const checkErrorCarPrize = useMemo(() => isNumberNotBetweenCurated(100, 100000), [])
     const checkErrorTaxPercentage = useMemo(() => isNumberNotBetweenCurated(0, 100), [])
-    const checkErrorNumberOfPolicies = useMemo(() => isNumberNotBetweenCurated(1, 10), [])
+    const checkErrorNumberOfPolicies = useMemo(() => isNumberNotBetweenCurated(1, 12), [])
 
 
     const sendData = async () => {
@@ -41,25 +41,30 @@ function MainForm() {
             return;
         }
 
-        setData(oldData=>({...oldData, loading: true}));
+        setData(oldData => ({ ...oldData, loading: true }));
 
-        const data = {
-            carValue,
-            taxPercentage,
-            numberOfPolicies,
-            localTime: Date.now()
+        const today = new Date();
+
+        const isoDate = today.toISOString();
+
+        console.log({ isoDate });
+
+        const formData = {
+            car_price: carValue,
+            tax_percentage: taxPercentage,
+            number_of_policies: numberOfPolicies,
+            local_time: isoDate
         }
 
         try {
-            const response = await sendInsuranceData(data);
-
-            console.log({ response })
+            const response = await sendInsuranceData(formData);
+            const data = response.data;
+            console.log(data)
         } catch (e) {
             console.log(e.message)
         }
 
-
-        setData(oldData=>({...oldData, loading: false}));
+        setData(oldData => ({ ...oldData, loading: false }));
     }
 
     return (
