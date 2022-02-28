@@ -2,6 +2,8 @@
 
 ![Insly logo](https://i.imgur.com/0178v4J.png)
 
+- `NETLIFY Deploy` [https://insly.netlify.app](https://insly.netlify.app)
+
 ## INDEX
 
 - `Frontend solution`
