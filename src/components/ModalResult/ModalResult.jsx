@@ -1,4 +1,4 @@
-import { Box, Chip, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, Chip, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { useGlobalContext } from 'contexts/useGlobalContext'
 import React from 'react'
 
@@ -7,7 +7,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-
+    maxWidth: '80vw',
     bgcolor: 'background.paper',
     borderRadius: '20px',
     boxShadow: 24,
@@ -31,7 +31,7 @@ function ModalResult() {
             onClose={handleClose}
         >
             <Box sx={style}>
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} sx={{overflowX:'auto'}}>
                     <Table size="small">
                         <TableHead>
                             <TableRow>
@@ -56,22 +56,18 @@ function ModalResult() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {userTimeCoincide ?
+
+
+                {!userTimeCoincide &&
                     <Chip
-                        sx={{ mt: 2 }}
-                        label={userIpInfo}
-                        color="primary"
-                        variant="outlined"
-                    />
-                    : <Chip
-                        sx={{ mt: 2, color: 'red' }}
+                        sx={{ mt: 3, color: 'red' }}
                         label="WARNING: Data may be incorrect due to inconsistencies in time data"
                         color="primary"
                         variant="outlined"
                     />
                 }
 
-
+                {!userIpInfo.toString().includes("INVALID") && <Typography sx={{ mt: 3 }}>{userIpInfo}</Typography>}
             </Box>
 
 

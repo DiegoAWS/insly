@@ -1,1 +1,1 @@
-export const url_api= "https://insly.herokuapp.com" || "http://localhost"; 
+export const url_api= "https://insly.herokuapp.com" ; 
