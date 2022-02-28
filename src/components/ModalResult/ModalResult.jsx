@@ -1,4 +1,4 @@
-import { Box, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, Chip, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { useGlobalContext } from 'contexts/useGlobalContext'
 import React from 'react'
 
@@ -17,13 +17,15 @@ const style = {
 function ModalResult() {
     const { isModalOpen, setIsModalOpen, data } = useGlobalContext()
 
-    const { columns, arrayData } = data;
+    const { columns, arrayData, userIpInfo, userTimeCoincide } = data;
 
     const cols = ['label', ...columns]
     const handleClose = () => {
         setIsModalOpen(false)
     }
+
     return (
+
         <Modal
             open={isModalOpen}
             onClose={handleClose}
@@ -54,7 +56,25 @@ function ModalResult() {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                {userTimeCoincide ?
+                    <Chip
+                        sx={{ mt: 2 }}
+                        label={userIpInfo}
+                        color="primary"
+                        variant="outlined"
+                    />
+                    : <Chip
+                        sx={{ mt: 2, color: 'red' }}
+                        label="WARNING: Data may be incorrect due to inconsistencies in time data"
+                        color="primary"
+                        variant="outlined"
+                    />
+                }
+
+
             </Box>
+
+
         </Modal>
     )
 }
