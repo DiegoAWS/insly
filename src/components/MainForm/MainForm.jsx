@@ -38,15 +38,16 @@ function MainForm() {
 
         const today = new Date();
 
-        const isoDate = today.toISOString();
+        const hour_of_day = today.getHours();
 
-        console.log({ isoDate });
+        const week_day = today.getDay();
 
         const formData = {
             car_price: carValue,
             tax_percentage: taxPercentage,
             number_of_policies: numberOfPolicies,
-            local_time: isoDate
+            hour_of_day,
+            week_day
         }
 
         sendDataToServer(formData)

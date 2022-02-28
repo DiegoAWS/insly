@@ -13,7 +13,7 @@ function LocalTimer() {
         const currentDate = new Date();
         const currentHours = currentDate.getHours();
         const currentWeekDay = currentDate.getDay();
-        if (currentWeekDay === 0 && currentHours >= 15 && currentHours < 20) {
+        if (currentWeekDay === 5 && currentHours >= 15 && currentHours < 20) {
           setShowOverPrice(true)
         }
           dateTimeRef.current.innerText = currentDate.toLocaleString();
@@ -25,7 +25,7 @@ function LocalTimer() {
 
   return <>
     {
-      showOverPrice && <span className="overprice">SUNDAY from 17:00 to 20:00 - 13% base policy price!!!</span>
+      showOverPrice && <span className="overprice">Friday from 17:00 to 20:00 - 13% base policy price!!!</span>
     }
     <span ref={dateTimeRef} />
   </>;
